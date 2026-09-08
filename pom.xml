@@ -101,6 +101,14 @@
             <version>6.20.6</version>
         </dependency>
 
+        <!-- Passwords in the `login` table are BCrypt hashes (matching the
+             backend's Spring Security BCryptPasswordEncoder), so the desktop
+             needs a real BCrypt check, not a plain String.equals(). -->
+        <dependency>
+            <groupId>org.mindrot</groupId>
+            <artifactId>jbcrypt</artifactId>
+            <version>0.4</version>
+        </dependency>
 
     </dependencies>
 

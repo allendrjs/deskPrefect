@@ -119,7 +119,14 @@ public class LoginController {
         }
 
         String user = usernameTextField.getText();
-        String pass = passwordField.getText();
+        // Read from whichever password field is actually visible --
+        // togglePasswordVisibility() only syncs the two fields at the
+        // moment the eye icon is clicked, not while typing, so if the
+        // user typed after toggling to "show password", passwordField
+        // itself would still hold stale (often blank) text.
+        String pass = (passwordField != null && passwordField.isVisible())
+                ? passwordField.getText()
+                : passwordTextField.getText();
 
         if (user == null || user.isBlank() || pass == null || pass.isBlank()) {
             showErrorPopup("Enter both username and password!");
@@ -138,6 +145,7 @@ public class LoginController {
             }
         } catch (Exception e) {
             e.printStackTrace();
+            showErrorPopup("Login failed: " + e.getMessage());
         }
     }
 

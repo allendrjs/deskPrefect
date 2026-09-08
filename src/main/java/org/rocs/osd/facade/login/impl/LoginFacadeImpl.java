@@ -1,5 +1,6 @@
 package org.rocs.osd.facade.login.impl;
 
+import org.mindrot.jbcrypt.BCrypt;
 import org.rocs.osd.data.dao.login.LoginDao;
 import org.rocs.osd.facade.login.LoginFacade;
 import org.rocs.osd.model.login.Login;
@@ -40,7 +41,36 @@ public class LoginFacadeImpl implements LoginFacade {
 
         Login login = loginDao.findLoginByUsername(inputUserName);
 
-        return login != null && inputPassword.equals(login.getPassword());
+        if (login == null || login.getPassword() == null
+                || login.getPassword().isBlank()) {
+            return false;
+        }
+
+        // Passwords are stored as BCrypt hashes (same scheme the backend's
+        // Spring Security BCryptPasswordEncoder uses), so they must be
+        // verified with BCrypt.checkpw() -- a plain String.equals() against
+        // the hash would never match the entered plaintext password.
+        //
+        // The org.mindrot:jbcrypt library used here only recognizes the
+        // "$2a$" version tag and throws "Invalid salt revision" for
+        // "$2b$"/"$2y$" hashes, even though the actual hash algorithm is
+        // identical -- the version tag alone changed to fix an unrelated
+        // historical edge case with passwords longer than 255 bytes, which
+        // doesn't apply to anything in this system. Normalizing the tag to
+        // "$2a$" before checking is the standard, safe workaround.
+        String storedHash = login.getPassword();
+        if (storedHash.startsWith("$2b$") || storedHash.startsWith("$2y$")) {
+            storedHash = "$2a$" + storedHash.substring(4);
+        }
+
+        try {
+            return BCrypt.checkpw(inputPassword, storedHash);
+        } catch (IllegalArgumentException e) {
+            // Stored value isn't a valid BCrypt hash (e.g. leftover
+            // plaintext test data) -- treat as a non-match rather than
+            // letting the exception propagate out of a login attempt.
+            return false;
+        }
     }
     /**
      * Retrieves a Login object by username.

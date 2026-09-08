@@ -12,7 +12,7 @@ public final class ConnectionHelper {
      * Database URL.
      */
     public static final String URL =
-            "jdbc:oracle:thin:@localhost:1521:oracleDB";
+            "jdbc:oracle:thin:@localhost:1521/oracleDB";
 
     /**
      * Oracle JDBC driver.
