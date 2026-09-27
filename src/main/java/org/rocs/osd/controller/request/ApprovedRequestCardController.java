@@ -51,6 +51,24 @@ public class ApprovedRequestCardController {
     private TextArea commentArea;
 
     /**
+     * Container for the AI suggestion badge.
+     */
+    @FXML
+    private VBox aiSuggestionBox;
+
+    /**
+     * The AI recommendation label (APPROVABLE / DENIABLE / UNCERTAIN).
+     */
+    @FXML
+    private Label aiRecommendationLabel;
+
+    /**
+     * The AI reasoning label.
+     */
+    @FXML
+    private Label aiReasoningLabel;
+
+    /**
      * Tracks whether the card is expanded or collapsed.
      */
     private boolean isExpanded = false;
@@ -78,6 +96,24 @@ public class ApprovedRequestCardController {
     public void setData(String pDept, String pName,
                         String pType, String pReason,
                         String remarks, long requestId) {
+        setData(pDept, pName, pType, pReason, remarks, requestId, null, null);
+    }
+
+    /**
+     * Sets the data for the request card, including the AI recommendation.
+     * @param pDept the department name.
+     * @param pName the requester name.
+     * @param pType the request type.
+     * @param pReason the reason for the request.
+     * @param remarks the remarks of the user approving the request.
+     * @param requestId the number for the specific cards
+     * @param pAiRecommendation AI recommendation (APPROVABLE / DENIABLE / UNCERTAIN), or null
+     * @param pAiReasoning short AI-generated reasoning, or null
+     */
+    public void setData(String pDept, String pName,
+                        String pType, String pReason,
+                        String remarks, long requestId,
+                        String pAiRecommendation, String pAiReasoning) {
         if (deptLabel != null) {
             deptLabel.setText(pDept);
         }
@@ -94,6 +130,56 @@ public class ApprovedRequestCardController {
             commentArea.setText(remarks);
         }
         cardId = requestId;
+        displayAiSuggestion(pAiRecommendation, pAiReasoning);
+    }
+
+    /**
+     * Populates the AI suggestion badge, if the AI produced a
+     * recommendation for this request. Hidden entirely when there's
+     * no recommendation on file.
+     *
+     * @param recommendation APPROVABLE / DENIABLE / UNCERTAIN, or null
+     * @param reasoning      short AI-generated reasoning, or null
+     */
+    private void displayAiSuggestion(String recommendation, String reasoning) {
+        if (aiSuggestionBox == null) {
+            return;
+        }
+        if (recommendation == null || recommendation.isBlank()) {
+            aiSuggestionBox.setVisible(false);
+            aiSuggestionBox.setManaged(false);
+            return;
+        }
+
+        String normalized = recommendation.trim().toUpperCase();
+        aiSuggestionBox.getStyleClass().removeAll(
+                "aiApprovable", "aiDeniable", "aiUncertain");
+
+        String badgeText;
+        switch (normalized) {
+            case "APPROVABLE":
+                badgeText = "AI Suggestion: Approvable";
+                aiSuggestionBox.getStyleClass().add("aiApprovable");
+                break;
+            case "DENIABLE":
+                badgeText = "AI Suggestion: Deniable";
+                aiSuggestionBox.getStyleClass().add("aiDeniable");
+                break;
+            default:
+                badgeText = "AI Suggestion: Uncertain";
+                aiSuggestionBox.getStyleClass().add("aiUncertain");
+                break;
+        }
+
+        if (aiRecommendationLabel != null) {
+            aiRecommendationLabel.setText(badgeText);
+        }
+        if (aiReasoningLabel != null) {
+            aiReasoningLabel.setText(reasoning != null ? reasoning : "");
+        }
+
+        aiSuggestionBox.setVisible(true);
+        aiSuggestionBox.setManaged(true);
     }
 
     /**
