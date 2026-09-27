@@ -87,6 +87,24 @@ public class DeniedAppealCardController {
     private Label reasonLabel;
 
     /**
+     * Container for the AI suggestion badge.
+     */
+    @FXML
+    private VBox aiSuggestionBox;
+
+    /**
+     * The AI recommendation label (APPROVABLE / DENIABLE / UNCERTAIN).
+     */
+    @FXML
+    private Label aiRecommendationLabel;
+
+    /**
+     * The AI reasoning label.
+     */
+    @FXML
+    private Label aiReasoningLabel;
+
+    /**
      * Remarks display area.
      */
     @FXML
@@ -122,5 +140,57 @@ public class DeniedAppealCardController {
         if (commentArea != null) {
             commentArea.setText(appeal.getRemarks());
         }
+        displayAiSuggestion(
+                appeal.getAiRecommendation(),
+                appeal.getAiReasoning());
+    }
+
+    /**
+     * Populates the AI suggestion badge, if the AI produced a
+     * recommendation for this appeal. Hidden entirely when there's
+     * no recommendation on file.
+     *
+     * @param recommendation APPROVABLE / DENIABLE / UNCERTAIN, or null
+     * @param reasoning      short AI-generated reasoning, or null
+     */
+    private void displayAiSuggestion(String recommendation, String reasoning) {
+        if (aiSuggestionBox == null) {
+            return;
+        }
+        if (recommendation == null || recommendation.isBlank()) {
+            aiSuggestionBox.setVisible(false);
+            aiSuggestionBox.setManaged(false);
+            return;
+        }
+
+        String normalized = recommendation.trim().toUpperCase();
+        aiSuggestionBox.getStyleClass().removeAll(
+                "aiApprovable", "aiDeniable", "aiUncertain");
+
+        String badgeText;
+        switch (normalized) {
+            case "APPROVABLE":
+                badgeText = "AI Suggestion: Approvable";
+                aiSuggestionBox.getStyleClass().add("aiApprovable");
+                break;
+            case "DENIABLE":
+                badgeText = "AI Suggestion: Deniable";
+                aiSuggestionBox.getStyleClass().add("aiDeniable");
+                break;
+            default:
+                badgeText = "AI Suggestion: Uncertain";
+                aiSuggestionBox.getStyleClass().add("aiUncertain");
+                break;
+        }
+
+        if (aiRecommendationLabel != null) {
+            aiRecommendationLabel.setText(badgeText);
+        }
+        if (aiReasoningLabel != null) {
+            aiReasoningLabel.setText(reasoning != null ? reasoning : "");
+        }
+
+        aiSuggestionBox.setVisible(true);
+        aiSuggestionBox.setManaged(true);
     }
 }
