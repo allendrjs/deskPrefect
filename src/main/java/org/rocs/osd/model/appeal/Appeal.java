@@ -41,6 +41,9 @@ public class Appeal {
     /** Short AI-generated reasoning behind the recommendation, grounded in the Student Handbook. */
     private String aiReasoning;
 
+    /** ID of the uploaded appeal letter document, or null if none was attached. */
+    private Long documentId;
+
     /** Default constructor to initialize an empty Appeal object. */
     public Appeal() {
         // Default constructor
@@ -187,5 +190,15 @@ public class Appeal {
     /** @param pAiReasoning sets the AI-generated reasoning behind the recommendation. */
     public void setAiReasoning(String pAiReasoning) {
         this.aiReasoning = pAiReasoning;
+    }
+
+    /** @return the ID of the uploaded appeal letter document, or null if none was attached. */
+    public Long getDocumentId() {
+        return documentId;
+    }
+
+    /** @param pDocumentId sets the ID of the uploaded appeal letter document. */
+    public void setDocumentId(Long pDocumentId) {
+        this.documentId = pDocumentId;
     }
 }

@@ -35,6 +35,8 @@
                     <Label fx:id="aiReasoningLabel" styleClass="aiReasoningText" wrapText="true" />
                 </VBox>
 
+                <Button fx:id="viewLetterButton" managed="false" onAction="#onViewLetter" styleClass="viewLetterButton" text="View Letter" visible="false" />
+
                 <VBox spacing="5" styleClass="commentContainer">
                     <Label styleClass="boldLabel" text="Comment:" />
                     <TextArea fx:id="commentArea" editable="false" prefHeight="60.0"
