@@ -255,3 +255,19 @@
 .aiUncertain .aiSuggestionLabel {
     -fx-text-fill: #666666;
 }
+
+.viewLetterButton {
+    -fx-background-color: white;
+    -fx-border-color: navy;
+    -fx-border-radius: 8;
+    -fx-text-fill: navy;
+    -fx-font-size: 12px;
+    -fx-font-weight: bold;
+    -fx-padding: 5 14;
+    -fx-cursor: hand;
+    -fx-alignment: CENTER_LEFT;
+}
+
+.viewLetterButton:hover {
+    -fx-background-color: #f2f2f2;
+}
