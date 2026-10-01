@@ -144,6 +144,9 @@ public class AppealCardController {
     /** Button to view the attached appeal letter, if any. */
     @FXML
     private Button viewLetterButton;
+    /** Badge shown when the student edited this appeal after filing it. */
+    @FXML
+    private Label editedBadge;
     /** The arrow icon ImageView. */
     @FXML
     private ImageView arrowIcon;
@@ -207,6 +210,10 @@ public class AppealCardController {
         if (viewLetterButton != null) {
             viewLetterButton.setVisible(false);
             viewLetterButton.setManaged(false);
+        }
+        if (editedBadge != null) {
+            editedBadge.setVisible(false);
+            editedBadge.setManaged(false);
         }
         if (arrowButton != null) {
             arrowButton.setMinSize(30, 30);
@@ -435,7 +442,22 @@ public class AppealCardController {
                     appeal.getAiRecommendation(),
                     appeal.getAiReasoning());
             displayLetterButton(appeal.getDocumentId());
+            displayEditedBadge(appeal.isEdited());
         }
+    }
+
+    /**
+     * Shows or hides the "Edited" badge depending on whether the
+     * student edited this appeal's message after filing it.
+     *
+     * @param edited whether the appeal was edited
+     */
+    private void displayEditedBadge(boolean edited) {
+        if (editedBadge == null) {
+            return;
+        }
+        editedBadge.setVisible(edited);
+        editedBadge.setManaged(edited);
     }
 
     /**

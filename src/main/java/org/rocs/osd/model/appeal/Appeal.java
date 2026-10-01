@@ -44,6 +44,9 @@ public class Appeal {
     /** ID of the uploaded appeal letter document, or null if none was attached. */
     private Long documentId;
 
+    /** Whether the student edited this appeal's message after filing it. */
+    private boolean edited;
+
     /** Default constructor to initialize an empty Appeal object. */
     public Appeal() {
         // Default constructor
@@ -200,5 +203,15 @@ public class Appeal {
     /** @param pDocumentId sets the ID of the uploaded appeal letter document. */
     public void setDocumentId(Long pDocumentId) {
         this.documentId = pDocumentId;
+    }
+
+    /** @return whether the student edited this appeal's message after filing it. */
+    public boolean isEdited() {
+        return edited;
+    }
+
+    /** @param pEdited sets whether the student edited this appeal's message. */
+    public void setEdited(boolean pEdited) {
+        this.edited = pEdited;
     }
 }
