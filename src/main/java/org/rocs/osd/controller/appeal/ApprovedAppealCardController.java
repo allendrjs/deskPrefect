@@ -124,6 +124,12 @@ public class ApprovedAppealCardController {
     private Button viewLetterButton;
 
     /**
+     * Badge shown when the student edited this appeal after filing it.
+     */
+    @FXML
+    private Label editedBadge;
+
+    /**
      * The appeal currently displayed by this card.
      */
     private Appeal appeal;
@@ -179,6 +185,7 @@ public class ApprovedAppealCardController {
                 appeal.getAiRecommendation(),
                 appeal.getAiReasoning());
         displayLetterButton(appeal.getDocumentId());
+        displayEditedBadge(appeal.isEdited());
     }
 
     /**
@@ -193,6 +200,19 @@ public class ApprovedAppealCardController {
         boolean hasLetter = documentId != null;
         viewLetterButton.setVisible(hasLetter);
         viewLetterButton.setManaged(hasLetter);
+    }
+
+    /**
+     * Shows or hides the "Edited" badge depending on whether the
+     * student edited this appeal's message after filing it.
+     * @param edited whether the appeal was edited
+     */
+    private void displayEditedBadge(boolean edited) {
+        if (editedBadge == null) {
+            return;
+        }
+        editedBadge.setVisible(edited);
+        editedBadge.setManaged(edited);
     }
 
     /**

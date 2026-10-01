@@ -44,6 +44,7 @@ public class AppealDaoImpl implements AppealDao {
                       a.aiRecommendation,
                       a.aiReasoning,
                       a.documentID,
+                      a.edited,
                       s.studentID,
                       p.firstName,
                       p.lastName,
@@ -77,6 +78,8 @@ public class AppealDaoImpl implements AppealDao {
 
                     long documentId = rs.getLong("documentID");
                     appeal.setDocumentId(rs.wasNull() ? null : documentId);
+
+                    appeal.setEdited(rs.getBoolean("edited"));
 
                     Record record = new Record();
                     record.setRecordId(rs.getLong("recordID"));
