@@ -88,6 +88,7 @@ public class RequestDaoImpl implements RequestDao {
                     r.setAiResponse(rs.getString("aiResponse"));
                     r.setAiRecommendation(rs.getString("aiRecommendation"));
                     r.setAiReasoning(rs.getString("aiReasoning"));
+                    r.setDeliveryMethod(rs.getString("deliveryMethod"));
 
                     requestList.add(r);
                 }

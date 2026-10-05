@@ -48,6 +48,14 @@ public class RequestCardController {
     @FXML
     private Label typeLabel;
 
+    /** Label displaying the students the request is about. */
+    @FXML
+    private Label studentsLabel;
+
+    /** Label displaying how the requester wants the result. */
+    @FXML
+    private Label deliveryLabel;
+
     /** Label displaying reason. */
     @FXML
     private Label reasonLabel;
@@ -215,6 +223,22 @@ public class RequestCardController {
         cardId = requestId;
 
         displayAiSuggestion(pAiRecommendation, pAiReasoning);
+    }
+
+    /**
+     * Shows whether the requester wants a hardcopy or an email.
+     *
+     * @param deliveryMethod HARDCOPY or EMAIL, or null
+     */
+    public void setDeliveryMethod(String deliveryMethod) {
+        if (deliveryLabel == null) {
+            return;
+        }
+        if ("EMAIL".equalsIgnoreCase(deliveryMethod)) {
+            deliveryLabel.setText("Email (Gmail)");
+        } else {
+            deliveryLabel.setText("Hardcopy (physical)");
+        }
     }
 
     /**
@@ -497,6 +521,17 @@ public class RequestCardController {
             }
         } catch (Exception e) {
             e.printStackTrace();
+        }
+    }
+
+    /**
+     * Shows which students the request is about.
+     *
+     * @param details comma-separated student IDs, or null
+     */
+    public void setStudents(String details) {
+        if (studentsLabel != null) {
+            studentsLabel.setText(details == null ? "" : details);
         }
     }
 }
