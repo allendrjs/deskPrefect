@@ -69,9 +69,11 @@ public class RequestController {
                 long requestId = request.getRequestID();
                 String aiRecommendation = request.getAiRecommendation();
                 String aiReasoning = request.getAiReasoning();
+                String deliveryMethod = request.getDeliveryMethod();
 
                 addPendingRequestCard(dept, name, type,
-                        reason, requestId, aiRecommendation, aiReasoning);
+                        reason, requestId, aiRecommendation, aiReasoning,
+                        deliveryMethod);
             }
         }
     }
@@ -85,12 +87,14 @@ public class RequestController {
      * @param requestId the unique identifier for the request
      * @param aiRecommendation the AI recommendation, or null
      * @param aiReasoning      the short AI-generated reasoning, or null
+     * @param deliveryMethod   HARDCOPY or EMAIL, or null
      */
     private void addPendingRequestCard(String dept, String name,
                                        String type, String reason,
                                        long requestId,
                                        String aiRecommendation,
-                                       String aiReasoning) {
+                                       String aiReasoning,
+                                       String deliveryMethod) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(
                     "/view/request/RequestCard.fxml"));
@@ -100,6 +104,7 @@ public class RequestController {
             if (controller != null) {
                 controller.setData(dept, name, type, reason, requestId,
                         aiRecommendation, aiReasoning);
+                controller.setDeliveryMethod(deliveryMethod);
                 listContainer.getChildren().add(card);
             }
         } catch (Exception e) {

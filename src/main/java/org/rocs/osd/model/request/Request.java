@@ -43,6 +43,9 @@ public class Request {
     /** Short AI-generated reasoning behind the recommendation. */
     private String aiReasoning;
 
+    /** How the department head wants the result: HARDCOPY or EMAIL. */
+    private String deliveryMethod;
+
     /** Default constructor initializing an empty Request object. */
     public Request() {
         // Default constructor
@@ -180,6 +183,16 @@ public class Request {
     /** @param pAiRecommendation sets the AI recommendation for this request. */
     public void setAiRecommendation(String pAiRecommendation) {
         this.aiRecommendation = pAiRecommendation;
+    }
+
+    /** @return how the requester wants the result (HARDCOPY or EMAIL), or null. */
+    public String getDeliveryMethod() {
+        return deliveryMethod;
+    }
+
+    /** @param pDeliveryMethod sets how the requester wants the result. */
+    public void setDeliveryMethod(String pDeliveryMethod) {
+        this.deliveryMethod = pDeliveryMethod;
     }
 
     /** @return the short AI-generated reasoning behind the recommendation, or null. */

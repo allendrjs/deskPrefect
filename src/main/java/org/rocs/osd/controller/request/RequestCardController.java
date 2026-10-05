@@ -48,6 +48,10 @@ public class RequestCardController {
     @FXML
     private Label typeLabel;
 
+    /** Label displaying how the requester wants the result. */
+    @FXML
+    private Label deliveryLabel;
+
     /** Label displaying reason. */
     @FXML
     private Label reasonLabel;
@@ -215,6 +219,22 @@ public class RequestCardController {
         cardId = requestId;
 
         displayAiSuggestion(pAiRecommendation, pAiReasoning);
+    }
+
+    /**
+     * Shows whether the requester wants a hardcopy or an email.
+     *
+     * @param deliveryMethod HARDCOPY or EMAIL, or null
+     */
+    public void setDeliveryMethod(String deliveryMethod) {
+        if (deliveryLabel == null) {
+            return;
+        }
+        if ("EMAIL".equalsIgnoreCase(deliveryMethod)) {
+            deliveryLabel.setText("Email");
+        } else {
+            deliveryLabel.setText("Hardcopy");
+        }
     }
 
     /**
