@@ -42,6 +42,13 @@ public class DeniedRequestCardController {
      * Label displaying the reason for the request.
      */
     @FXML
+    private Label studentsLabel;
+
+    /** Label displaying how the requester wants the result. */
+    @FXML
+    private Label deliveryLabel;
+
+    @FXML
     private Label reasonLabel;
     /**
      * Label for displaying the reason
@@ -201,6 +208,33 @@ public class DeniedRequestCardController {
             ));
         } catch (Exception e) {
             arrowIcon.setRotate(isExpanded ? 90 : 0);
+        }
+    }
+
+    /**
+     * Shows which students the request is about.
+     *
+     * @param details comma-separated student IDs, or null
+     */
+    public void setStudents(String details) {
+        if (studentsLabel != null) {
+            studentsLabel.setText(details == null ? "" : details);
+        }
+    }
+
+    /**
+     * Shows whether the requester wants a physical copy or an email.
+     *
+     * @param deliveryMethod HARDCOPY or EMAIL, or null
+     */
+    public void setDeliveryMethod(String deliveryMethod) {
+        if (deliveryLabel == null) {
+            return;
+        }
+        if ("EMAIL".equalsIgnoreCase(deliveryMethod)) {
+            deliveryLabel.setText("Email (Gmail)");
+        } else {
+            deliveryLabel.setText("Hardcopy (physical)");
         }
     }
 }

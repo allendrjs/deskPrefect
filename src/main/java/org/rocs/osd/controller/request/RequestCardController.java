@@ -48,6 +48,10 @@ public class RequestCardController {
     @FXML
     private Label typeLabel;
 
+    /** Label displaying the students the request is about. */
+    @FXML
+    private Label studentsLabel;
+
     /** Label displaying how the requester wants the result. */
     @FXML
     private Label deliveryLabel;
@@ -231,9 +235,9 @@ public class RequestCardController {
             return;
         }
         if ("EMAIL".equalsIgnoreCase(deliveryMethod)) {
-            deliveryLabel.setText("Email");
+            deliveryLabel.setText("Email (Gmail)");
         } else {
-            deliveryLabel.setText("Hardcopy");
+            deliveryLabel.setText("Hardcopy (physical)");
         }
     }
 
@@ -517,6 +521,17 @@ public class RequestCardController {
             }
         } catch (Exception e) {
             e.printStackTrace();
+        }
+    }
+
+    /**
+     * Shows which students the request is about.
+     *
+     * @param details comma-separated student IDs, or null
+     */
+    public void setStudents(String details) {
+        if (studentsLabel != null) {
+            studentsLabel.setText(details == null ? "" : details);
         }
     }
 }

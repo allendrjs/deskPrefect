@@ -27,6 +27,9 @@
                     <Label fx:id="typeLabel" styleClass="dataLabel" />
                 </HBox>
 
+                <Label styleClass="boldLabel" text="Students: " />
+                <Label fx:id="studentsLabel" styleClass="reasonText" wrapText="true" />
+
                 <HBox styleClass="labelRow">
                     <Label styleClass="boldLabel" text="Delivery: " />
                     <Label fx:id="deliveryLabel" styleClass="dataLabel" />
