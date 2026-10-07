@@ -231,8 +231,12 @@ public class ApprovedRequestCardController {
         if (deliveryLabel == null) {
             return;
         }
-        if ("EMAIL".equalsIgnoreCase(deliveryMethod)) {
-            deliveryLabel.setText("Email (Gmail)");
+        if (deliveryMethod != null
+                && deliveryMethod.toUpperCase().startsWith("EMAIL")) {
+            int sep = deliveryMethod.indexOf(':');
+            String address = sep >= 0 ? deliveryMethod.substring(sep + 1) : "";
+            deliveryLabel.setText(address.isEmpty()
+                    ? "Email (Gmail)" : "Email (Gmail): " + address);
         } else {
             deliveryLabel.setText("Hardcopy (physical)");
         }

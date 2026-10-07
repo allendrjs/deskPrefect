@@ -46,6 +46,9 @@ public class Request {
     /** How the department head wants the result: HARDCOPY or EMAIL. */
     private String deliveryMethod;
 
+    /** Gmail address to send the result to when delivery is EMAIL. */
+    private String deliveryEmail;
+
     /** Default constructor initializing an empty Request object. */
     public Request() {
         // Default constructor
@@ -188,6 +191,16 @@ public class Request {
     /** @return how the requester wants the result (HARDCOPY or EMAIL), or null. */
     public String getDeliveryMethod() {
         return deliveryMethod;
+    }
+
+    /** @return the Gmail address for EMAIL delivery, or null. */
+    public String getDeliveryEmail() {
+        return deliveryEmail;
+    }
+
+    /** @param pDeliveryEmail sets the Gmail address for EMAIL delivery. */
+    public void setDeliveryEmail(String pDeliveryEmail) {
+        this.deliveryEmail = pDeliveryEmail;
     }
 
     /** @param pDeliveryMethod sets how the requester wants the result. */
