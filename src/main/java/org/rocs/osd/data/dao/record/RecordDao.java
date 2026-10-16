@@ -93,6 +93,12 @@ public interface RecordDao {
     int findTotalViolations(String schoolYear);
 
     /**
+     * Finds the most recent school year that has enrollment data.
+     * @return the latest school year, or null if there is none.
+     */
+    String findLatestSchoolYear();
+
+    /**
      * Counts the total number of violations recorded today.
      * @return the total number of violations recorded today.
      */
