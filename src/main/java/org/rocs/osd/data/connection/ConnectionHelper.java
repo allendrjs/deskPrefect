@@ -67,6 +67,14 @@ public final class ConnectionHelper {
      *
      *  @return a Connection object representing the database connection.
      */
+    private static boolean isLocalhost(String url) {
+        String lower = url.toLowerCase();
+        return lower.contains("@localhost:")
+                || lower.contains("@127.0.0.1:")
+                || lower.contains("//localhost:")
+                || lower.contains("//127.0.0.1:");
+    }
+
     public static Connection getConnection() {
         try {
             String url = resolve("db.url", "DB_URL", "db.url", DEFAULT_URL);
@@ -74,6 +82,11 @@ public final class ConnectionHelper {
                     "db.username", DEFAULT_USERNAME);
             String password = resolve("db.password", "DB_PASSWORD",
                     "db.password", DEFAULT_PASSWORD);
+
+            if (!isLocalhost(url)) {
+                throw new IllegalStateException(
+                        "This build only connects to a local database.");
+            }
 
             Class.forName(ORACLE_DRIVER).getDeclaredConstructor().newInstance();
 
