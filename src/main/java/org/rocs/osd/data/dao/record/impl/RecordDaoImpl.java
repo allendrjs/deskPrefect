@@ -566,6 +566,26 @@ public class RecordDaoImpl implements RecordDao {
     }
 
     /**
+     * Finds the most recent school year that has enrollment data.
+     * @return the latest school year, or null if there is none.
+     */
+    @Override
+    public String findLatestSchoolYear() {
+        try (Connection con = ConnectionHelper.getConnection();
+             PreparedStatement stmt = con.prepareStatement(
+                     "SELECT MAX(schoolYear) FROM enrollment");
+             ResultSet rs = stmt.executeQuery()) {
+            if (rs.next()) {
+                return rs.getString(1);
+            }
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+
+        return null;
+    }
+
+    /**
      * Method for current day number of violation.
      * */
     @Override

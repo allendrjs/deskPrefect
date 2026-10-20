@@ -58,14 +58,16 @@ public class OffenseDaoImpl implements OffenseDao {
     @Override
     public List<String> findAllOffenseName() {
         List<String> offenses = new ArrayList<>();
-        String sql = "SELECT offense FROM offense ORDER BY offense";
+        String sql = "SELECT offense, isActive FROM offense ORDER BY offense";
 
         try (Connection conn = ConnectionHelper.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
 
             try (ResultSet rs = stmt.executeQuery()) {
                 while (rs.next()) {
-                    offenses.add(rs.getString("offense"));
+                    if (rs.getBoolean("isActive")) {
+                        offenses.add(rs.getString("offense"));
+                    }
                 }
             }
         } catch (SQLException e) {
@@ -85,7 +87,7 @@ public class OffenseDaoImpl implements OffenseDao {
         Offense offense = null;
         String sql = "SELECT offenseID, "
                 + "offense, "
-                + "type FROM offense WHERE offense = ?";
+                + "type, isActive FROM offense WHERE offense = ?";
 
         try (Connection conn = ConnectionHelper.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
@@ -93,7 +95,7 @@ public class OffenseDaoImpl implements OffenseDao {
             stmt.setString(1, offenseName);
             try (ResultSet rs = stmt.executeQuery()) {
 
-                if (rs.next()) {
+                if (rs.next() && rs.getBoolean("isActive")) {
                     offense = new Offense();
                     offense.setOffenseId(rs.getLong("offenseID"));
                     offense.setOffense(rs.getString("offense"));

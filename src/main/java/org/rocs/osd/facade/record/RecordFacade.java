@@ -103,6 +103,13 @@ public interface RecordFacade {
     int getTotalViolations(String schoolYear);
 
     /**
+     * Returns the most recent school year that has enrollment data.
+     *
+     * @return the latest school year, or null if there is none
+     */
+    String getLatestSchoolYear();
+
+    /**
      * Retrieves student records filtered by department and school year.
      *
      * @param department the department to filter by.

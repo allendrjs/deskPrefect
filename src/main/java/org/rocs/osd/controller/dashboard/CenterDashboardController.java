@@ -135,12 +135,26 @@ public class CenterDashboardController {
         int year = now.getYear();
         int month = now.getMonthValue();
 
-        if (month >= 6) {
-            return year + "-" + (year + 1);
-        } else {
-            return (year - 1) + "-" + year;
+        String computed = month >= 6
+                ? year + "-" + (year + 1)
+                : (year - 1) + "-" + year;
+
+        if (resolvedSchoolYear == null) {
+            try {
+                String latest = recordFacade.getLatestSchoolYear();
+                resolvedSchoolYear = latest != null
+                        && latest.compareTo(computed) < 0
+                        && recordFacade.getTotalViolations(computed) == 0
+                        ? latest : computed;
+            } catch (RuntimeException e) {
+                resolvedSchoolYear = computed;
+            }
         }
+
+        return resolvedSchoolYear;
     }
+
+    private String resolvedSchoolYear;
 
     private void loadTime() {
         Timeline timeline = new Timeline(

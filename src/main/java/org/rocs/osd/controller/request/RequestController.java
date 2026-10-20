@@ -143,7 +143,9 @@ public class RequestController {
         long requestId = request.getRequestID();
         String aiRecommendation = request.getAiRecommendation();
         String aiReasoning = request.getAiReasoning();
-        String deliveryMethod = request.getDeliveryMethod();
+        String deliveryMethod = request.getDeliveryMethod()
+                        + (request.getDeliveryEmail() == null
+                        ? "" : ":" + request.getDeliveryEmail());
         String details = request.getDetails();
 
         addPendingRequestCard(dept, name, type,
@@ -225,7 +227,9 @@ public class RequestController {
                 long requestId = request.getRequestID();
                 String aiRecommendation = request.getAiRecommendation();
                 String aiReasoning = request.getAiReasoning();
-                String deliveryMethod = request.getDeliveryMethod();
+                String deliveryMethod = request.getDeliveryMethod()
+                        + (request.getDeliveryEmail() == null
+                        ? "" : ":" + request.getDeliveryEmail());
                 String details = request.getDetails();
 
                 addApproveRequestCard(dept, name, type,
@@ -310,7 +314,9 @@ public class RequestController {
                 long requestId = request.getRequestID();
                 String aiRecommendation = request.getAiRecommendation();
                 String aiReasoning = request.getAiReasoning();
-                String deliveryMethod = request.getDeliveryMethod();
+                String deliveryMethod = request.getDeliveryMethod()
+                        + (request.getDeliveryEmail() == null
+                        ? "" : ":" + request.getDeliveryEmail());
                 String details = request.getDetails();
 
                 addDeniedRequestCard(dept, name, type,

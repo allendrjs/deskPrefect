@@ -202,6 +202,16 @@ public class RecordFacadeImpl implements RecordFacade {
     }
 
     /**
+     * Returns the most recent school year that has enrollment data.
+     *
+     * @return the latest school year, or null if there is none
+     */
+    @Override
+    public String getLatestSchoolYear() {
+        return recordDao.findLatestSchoolYear();
+    }
+
+    /**
      * Retrieves student records filtered by department and school year.
      *
      * @param department the department to filter by.
